@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student Manager</title>
+    <style>
+        :root {
+            --ink: #18232d;
+            --muted: #697780;
+            --paper: #fbfcfa;
+            --line: #dfe7e3;
+            --teal: #0d7770;
+            --orange: #e87b50;
+            --yellow: #f5c85b
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            color: var(--ink);
+            background: #eaf0ed;
+            font-family: Arial, sans-serif
+        }
+
+        .shell {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 34px 28px 50px
+        }
+
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--ink);
+            color: #fff;
+            padding: 38px 44px;
+            border-radius: 18px;
+            overflow: hidden;
+            position: relative
+        }
+
+        .hero:after {
+            content: "";
+            width: 300px;
+            height: 300px;
+            border: 1px solid #ffffff2e;
+            border-radius: 50%;
+            position: absolute;
+            right: 85px;
+            top: -135px
+        }
+
+        .eyebrow,
+        .menu-label {
+            letter-spacing: .13em;
+            font-size: .7rem;
+            font-weight: 700;
+            color: var(--yellow);
+            margin: 0 0 11px
+        }
+
+        h1 {
+            font: 700 clamp(2.3rem, 5vw, 4.4rem)/.95 Georgia, serif;
+            margin: 0
+        }
+
+        h1 em {
+            color: var(--yellow);
+            font-style: normal
+        }
+
+        .subtitle {
+            color: #b7c7c5;
+            margin: 17px 0 0;
+            font-size: 1.02rem
+        }
+
+        .hero-mark {
+            font-size: 5rem;
+            color: var(--orange);
+            transform: rotate(12deg);
+            z-index: 1
+        }
+
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+            margin: 18px 0
+        }
+
+        .metrics article {
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            padding: 18px 20px
+        }
+
+        .metrics span {
+            display: block;
+            color: var(--muted);
+            font-size: .82rem;
+            margin-bottom: 7px
+        }
+
+        .metrics strong {
+            font: 700 1.7rem Georgia, serif
+        }
+
+        .workspace {
+            display: grid;
+            grid-template-columns: 245px 1fr;
+            gap: 18px;
+            align-items: start
+        }
+
+        .menu,
+        .content {
+            background: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: 12px
+        }
+
+        .menu {
+            padding: 19px 12px
+        }
+
+        .menu-label {
+            color: var(--muted);
+            padding: 0 12px
+        }
+
+        .nav-button {
+            width: 100%;
+            border: 0;
+            border-radius: 8px;
+            padding: 12px;
+            margin: 2px 0;
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+            text-align: left;
+            font: 600 .86rem Arial, sans-serif;
+            display: flex;
+            gap: 10px
+        }
+
+        .nav-button span {
+            color: var(--ink)
+        }
+
+        .nav-button:hover,
+        .nav-button.active {
+            background: #dcefeb;
+            color: var(--teal)
+        }
+
+        .nav-button.active span {
+            color: var(--teal)
+        }
+
+        .exit-link {
+            margin-top: 12px;
+            border-top: 1px solid var(--line);
+            border-radius: 0;
+            padding-top: 16px
+        }
+
+        .content {
+            padding: 32px;
+            min-height: 480px
+        }
+
+        h2 {
+            font: 700 1.65rem Georgia, serif;
+            margin: 0 0 8px
+        }
+
+        .intro {
+            color: var(--muted);
+            margin: 0 0 24px
+        }
+
+        form {
+            display: grid;
+            gap: 15px;
+            max-width: 720px
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px
+        }
+
+        label {
+            display: grid;
+            gap: 7px;
+            color: var(--muted);
+            font-size: .82rem;
+            font-weight: 600
+        }
+
+        input,
+        select {
+            width: 100%;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 12px;
+            color: var(--ink);
+            background: #fff;
+            font: inherit
+        }
+
+        input:focus,
+        select:focus {
+            outline: 2px solid #a5d8d1;
+            border-color: var(--teal)
+        }
+
+        button.primary,
+        .download-link {
+            border: 0;
+            border-radius: 8px;
+            background: var(--teal);
+            color: #fff;
+            padding: 12px 17px;
+            font: 700 .88rem Arial, sans-serif;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            width: fit-content
+        }
+
+        .danger {
+            background: #ba4e2b !important
+        }
+
+        .table-wrap {
+            overflow-x: auto
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: .88rem
+        }
+
+        th,
+        td {
+            border-bottom: 1px solid var(--line);
+            padding: 13px 10px;
+            text-align: left
+        }
+
+        th {
+            color: var(--muted);
+            font-size: .74rem;
+            text-transform: uppercase;
+            letter-spacing: .07em
+        }
+
+        .grade {
+            color: var(--teal);
+            font-weight: 700
+        }
+
+        .report-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px
+        }
+
+        .report-card {
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            padding: 18px
+        }
+
+        .bar {
+            height: 13px;
+            background: #e5ece9;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 7px 0 14px
+        }
+
+        .bar i {
+            display: block;
+            height: 100%;
+            background: var(--orange)
+        }
+
+        .empty {
+            padding: 45px 0;
+            text-align: center;
+            color: var(--muted)
+        }
+
+        .toast {
+            position: fixed;
+            right: 28px;
+            bottom: 25px;
+            background: var(--ink);
+            color: #fff;
+            padding: 13px 17px;
+            border-radius: 8px;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: .2s;
+            pointer-events: none
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0)
+        }
+
+        @media(max-width:760px) {
+            .shell {
+                padding: 15px
+            }
+
+            .hero {
+                padding: 28px 24px
+            }
+
+            .hero-mark {
+                display: none
+            }
+
+            .metrics {
+                grid-template-columns: 1fr 1fr
+            }
+
+            .workspace {
+                grid-template-columns: 1fr
+            }
+
+            .menu {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 2px
+            }
+
+            .menu-label {
+                grid-column: 1/-1
+            }
+
+            .exit-link {
+                margin-top: 2px;
+                border-top: 0;
+                padding-top: 12px
+            }
+
+            .content {
+                padding: 23px 18px
+            }
+
+            .form-grid,
+            .report-grid {
+                grid-template-columns: 1fr
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <main class="shell">
+        <header class="hero">
+            <div>
+                <p class="eyebrow">CLASSROOM CONTROL CENTER</p>
+                <h1>Student <em>Manager</em></h1>
+                <p class="subtitle">Keep every learner, mark, and report in one calm place.</p>
+            </div>
+            <div class="hero-mark">✦</div>
+        </header>
+        <section class="metrics">
+            <article><span>Total students</span><strong id="totalMetric">0</strong></article>
+            <article><span>Class average</span><strong id="averageMetric">0%</strong></article>
+            <article><span>Top mark</span><strong id="topMetric">0%</strong></article>
+            <article><span>Passing</span><strong id="passingMetric">0</strong></article>
+        </section>
+        <div class="workspace">
+            <nav class="menu">
+                <p class="menu-label">Workspace</p><button class="nav-button active" data-view="add">01 <span>Add
+                        Student</span></button><button class="nav-button" data-view="display">02 <span>Display
+                        Students</span></button><button class="nav-button" data-view="search">03 <span>Search
+                        Student</span></button><button class="nav-button" data-view="update">04 <span>Update
+                        Student</span></button><button class="nav-button" data-view="delete">05 <span>Delete
+                        Student</span></button><button class="nav-button" data-view="grade">06 <span>Calculate
+                        Grade</span></button><button class="nav-button" data-view="save">07 <span>Save to
+                        CSV</span></button><button class="nav-button" data-view="load">08 <span>Load
+                        CSV</span></button><button class="nav-button" data-view="reports">09
+                    <span>Reports</span></button><button class="nav-button exit-link" data-view="exit">10
+                    <span>Exit</span></button>
+            </nav>
+            <section class="content" id="content" aria-live="polite"></section>
+        </div>
+        <div id="toast" class="toast" role="status"></div>
+    </main>
+    <script>
+        const content = document.querySelector("#content");
+        const toast = document.querySelector("#toast");
+        let students = JSON.parse(localStorage.getItem("student-manager-data") || "[]");
+        const saveData = () => localStorage.setItem("student-manager-data", JSON.stringify(students));
+        const esc = value => String(value).replace(/[&<>'"]/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" }[char]));
+        const grade = marks => marks >= 90 ? "A+" : marks >= 80 ? "A" : marks >= 70 ? "B" : marks >= 60 ? "C" : marks >= 50 ? "D" : "F";
+        const showToast = message => { toast.textContent = message; toast.classList.add("show"); setTimeout(() => toast.classList.remove("show"), 2800); };
+        const formFields = student => `<div class="form-grid"><label>Full name<input name="name" value="${esc(student.name || "")}" required></label><label>Student ID<input name="id" value="${esc(student.id || "")}" required></label><label>Age<input name="age" type="number" min="3" max="100" value="${student.age || 18}" required></label><label>Course<input name="course" value="${esc(student.course || "")}" required></label><label>Marks (%)<input name="marks" type="number" min="0" max="100" step="0.5" value="${student.marks ?? 50}" required></label></div>`;
+        const readForm = form => { const data = Object.fromEntries(new FormData(form)); return { id: data.id.trim(), name: data.name.trim(), age: Number(data.age), course: data.course.trim(), marks: Number(data.marks), grade: grade(Number(data.marks)) }; };
+        const table = rows => !rows.length ? `<div class="empty">No student records yet. Add your first student to get started.</div>` : `<div class="table-wrap"><table><thead><tr><th>ID</th><th>Name</th><th>Age</th><th>Course</th><th>Marks</th><th>Grade</th></tr></thead><tbody>${rows.map(s => `<tr><td>${esc(s.id)}</td><td>${esc(s.name)}</td><td>${s.age}</td><td>${esc(s.course)}</td><td>${s.marks}%</td><td class="grade">${s.grade}</td></tr>`).join("")}</tbody></table></div>`;
+        const report = () => { const marks = students.map(s => s.marks); const distribution = {}; students.forEach(s => distribution[s.grade] = (distribution[s.grade] || 0) + 1); return { total: students.length, average: marks.length ? (marks.reduce((a, b) => a + b, 0) / marks.length).toFixed(1) : 0, highest: Math.max(0, ...marks), lowest: Math.min(0, ...marks), passRate: marks.length ? (marks.filter(mark => mark >= 50).length / marks.length * 100).toFixed(1) : 0, distribution }; };
+        const refresh = () => { const data = report(); totalMetric.textContent = data.total; averageMetric.textContent = `${data.average}%`; topMetric.textContent = `${data.highest}%`; passingMetric.textContent = students.filter(s => s.marks >= 50).length; saveData(); };
+        const csvEscape = value => `"${String(value).replace(/"/g, '""')}"`;
+        const downloadCsv = () => { const lines = ["id,name,age,course,marks,grade", ...students.map(s => [s.id, s.name, s.age, s.course, s.marks, s.grade].map(csvEscape).join(","))]; const link = document.createElement("a"); link.href = URL.createObjectURL(new Blob([lines.join("\n")], { type: "text/csv" })); link.download = "students.csv"; link.click(); URL.revokeObjectURL(link.href); };
+        const parseCsv = text => text.trim().split(/\r?\n/).slice(1).map(line => { const values = [...line.matchAll(/(?:^|,)\s*(?:"((?:[^"]|"")*)"|([^,]*))/g)].map(match => (match[1] ?? match[2]).replace(/""/g, '"').trim()); return { id: values[0], name: values[1], age: Number(values[2]), course: values[3], marks: Number(values[4]), grade: grade(Number(values[4])) }; });
+        const setView = view => { document.querySelectorAll(".nav-button").forEach(button => button.classList.toggle("active", button.dataset.view === view)); views[view](); };
+        const views = {
+            add: () => { content.innerHTML = `<h2>Add Student</h2><p class="intro">Create a new learner record and calculate their grade automatically.</p><form id="studentForm">${formFields({})}<button class="primary">Add Student</button></form>`; studentForm.onsubmit = e => { e.preventDefault(); const student = readForm(e.target); if (students.some(s => s.id === student.id)) return showToast("That student ID already exists."); students.push(student); refresh(); e.target.reset(); showToast("Student added successfully.") }; },
+            display: () => { content.innerHTML = `<h2>Display Students</h2><p class="intro">Your complete class register.</p>${table(students)}`; },
+            search: () => { content.innerHTML = `<h2>Search Student</h2><p class="intro">Find a student by ID, name, or course.</p><label>Search<input id="searchInput" placeholder="e.g. ST001 or Computer Science"></label><div id="searchResults">${table(students)}</div>`; searchInput.oninput = e => { const query = e.target.value.toLowerCase(); searchResults.innerHTML = table(students.filter(s => Object.values(s).join(" ").toLowerCase().includes(query))) }; },
+            update: () => { content.innerHTML = `<h2>Update Student</h2><p class="intro">Choose a record, make changes, and save.</p>${students.length ? `<label>Select student<select id="updateSelect">${students.map(s => `<option value="${esc(s.id)}">${esc(s.id)} - ${esc(s.name)}</option>`).join("")}</select></label><div id="updateForm"></div>` : `<div class="empty">Add a student before updating records.</div>`}`; if (students.length) { const render = () => { const student = students.find(s => s.id === updateSelect.value); updateForm.innerHTML = `<form id="editForm">${formFields(student)}<button class="primary">Save Changes</button></form>`; editForm.onsubmit = e => { e.preventDefault(); const updated = readForm(e.target); if (updated.id !== student.id && students.some(s => s.id === updated.id)) return showToast("That student ID already exists."); students[students.indexOf(student)] = updated; refresh(); setView("update"); showToast("Student updated.") } }; updateSelect.onchange = render; render() } },
+            delete: () => { content.innerHTML = `<h2>Delete Student</h2><p class="intro">Remove an incorrect or inactive record.</p>${students.length ? `<label>Select student<select id="deleteSelect">${students.map(s => `<option value="${esc(s.id)}">${esc(s.id)} - ${esc(s.name)}</option>`).join("")}</select></label><button id="deleteButton" class="primary danger">Delete Student</button>` : `<div class="empty">There are no students to delete.</div>`}`; if (students.length) deleteButton.onclick = () => { if (confirm("Delete this student?")) { students = students.filter(s => s.id !== deleteSelect.value); refresh(); setView("delete"); showToast("Student deleted.") } }; },
+            grade: () => { content.innerHTML = `<h2>Calculate Grade</h2><p class="intro">Try a mark and see the result instantly.</p><form id="gradeForm"><label>Marks (%)<input id="gradeMarks" type="number" min="0" max="100" value="75" step="0.5"></label><button class="primary">Calculate Grade</button></form><div id="gradeResult"></div>`; gradeForm.onsubmit = e => { e.preventDefault(); const marks = Number(gradeMarks.value); gradeResult.innerHTML = `<div class="report-card"><p class="eyebrow">RESULT</p><h2>${grade(marks)}</h2><p>${marks}% earns grade ${grade(marks)}.</p></div>` }; },
+            save: () => { content.innerHTML = `<h2>Save to CSV</h2><p class="intro">Download the current register as a spreadsheet-ready CSV file.</p>${students.length ? `<button id="downloadButton" class="primary">Download students.csv</button>` : `<div class="empty">Add students before saving a CSV.</div>`}`; if (students.length) downloadButton.onclick = downloadCsv; },
+            load: () => { content.innerHTML = `<h2>Load CSV</h2><p class="intro">Import columns named id, name, age, course, and marks.</p><form id="uploadForm"><label>Choose CSV file<input id="csvFile" type="file" accept=".csv" required></label><button class="primary">Load Students</button></form>`; uploadForm.onsubmit = async e => { e.preventDefault(); try { const imported = parseCsv(await csvFile.files[0].text()); if (!imported.length || imported.some(s => !s.id || !s.name || !s.course || !Number.isFinite(s.age) || !Number.isFinite(s.marks) || s.age < 3 || s.age > 100 || s.marks < 0 || s.marks > 100)) throw new Error("CSV must contain valid id, name, age, course, and marks values."); if (new Set(imported.map(s => s.id)).size !== imported.length) throw new Error("Duplicate student ID in CSV."); students = imported; refresh(); setView("display"); showToast("CSV loaded successfully.") } catch (error) { showToast(error.message) } }; },
+            reports: () => { const data = report(); const bars = Object.entries(data.distribution).map(([key, count]) => `<div><b>${key}</b> <small>${count} student${count === 1 ? "" : "s"}</small><div class="bar"><i style="width:${data.total ? count / data.total * 100 : 0}%"></i></div></div>`).join("") || `<div class="empty">Add students to generate a report.</div>`; content.innerHTML = `<h2>Reports</h2><p class="intro">A quick view of class performance.</p><div class="report-grid"><div class="report-card"><p class="eyebrow">GRADE DISTRIBUTION</p>${bars}</div><div class="report-card"><p class="eyebrow">CLASS SUMMARY</p><p><b>Highest mark:</b> ${data.highest}%</p><p><b>Lowest mark:</b> ${data.lowest}%</p><p><b>Average mark:</b> ${data.average}%</p><p><b>Pass rate:</b> ${data.passRate}%</p></div></div>`; },
+            exit: () => { content.innerHTML = `<h2>Exit</h2><p class="intro">Close your session when you are finished.</p><button id="exitButton" class="primary danger">Exit Student Manager</button>`; exitButton.onclick = () => content.innerHTML = `<div class="empty"><h2>Session closed</h2><p>You can close this browser tab now.</p></div>`; }
+        };
+        document.querySelectorAll(".nav-button").forEach(button => button.onclick = () => setView(button.dataset.view));
+        refresh(); setView("add");
+    </script>
+</body>
+
+</html>
